@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cochería Comini — Servicios Fúnebres</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #0f0f0f;
+      --deep:     #161614;
+      --charcoal: #1e1e1b;
+      --stone:    #2e2e2a;
+      --ash:      #4a4a45;
+      --mid:      #7a7a72;
+      --pale:     #b8b8ae;
+      --paper:    #e8e4dc;
+      --white:    #f4f2ec;
+      --gold:     #8c7a55;
+      --gold-l:   #b09a6e;
+      --line:     rgba(180,170,150,0.12);
+      --line-s:   rgba(180,170,150,0.06);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 300;
+      background: var(--ink);
+      color: var(--paper);
+      overflow-x: hidden;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--ink);
+      border-bottom: 1px solid var(--line);
+      color: var(--ash);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-align: center;
+      padding: 11px 20px;
+    }
+    .topbar a { color: var(--pale); text-decoration: none; transition: color 0.3s; }
+    .topbar a:hover { color: var(--white); }
+    .topbar .sep { margin: 0 20px; opacity: 0.25; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(15,15,15,0.94);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6vw;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Noto Serif', serif;
+      font-weight: 400;
+      font-size: 1rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .nav-logo span {
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 200;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      color: var(--gold-l);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 36px;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--pale); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-emergency {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      color: var(--gold-l);
+      text-decoration: none;
+      border: 1px solid rgba(140,122,85,0.35);
+      padding: 8px 18px;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .nav-emergency:hover { border-color: var(--gold-l); color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 6vw;
+    }
+    .hero-kamon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeIn 2s 0.3s ease forwards;
+    }
+    .hero-pre {
+      font-size: 0.62rem;
+      font-weight: 200;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeIn 1.4s 0.8s ease forwards;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif', serif;
+      font-weight: 300;
+      font-size: clamp(2.6rem, 5.5vw, 5rem);
+      line-height: 1.18;
+      letter-spacing: 0.03em;
+      color: var(--white);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeIn 1.4s 1.1s ease forwards;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-l);
+      font-weight: 300;
+    }
+    .hero-rule {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeIn 1.4s 1.4s ease forwards;
+    }
+    .hero-sub {
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      line-height: 2;
+      color: var(--mid);
+      max-width: 440px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeIn 1.4s 1.6s ease forwards;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 1.4s 1.9s ease forwards;
+    }
+    .btn-main {
+      background: transparent;
+      border: 1px solid rgba(176,154,110,0.45);
+      color: var(--gold-l);
+      padding: 14px 36px;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.4s, color 0.4s, border-color 0.4s;
+    }
+    .btn-main:hover { background: rgba(176,154,110,0.08); border-color: var(--gold-l); color: var(--white); }
+    .btn-ghost {
+      color: var(--mid);
+      padding: 14px 36px;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .btn-ghost:hover { color: var(--pale); }
+
+    /* Petals */
+    .petal {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(-40px) rotate(0deg) translateX(0); opacity: 0; }
+      8%   { opacity: 0.35; }
+      92%  { opacity: 0.12; }
+      100% { transform: translateY(110vh) rotate(480deg) translateX(50px); opacity: 0; }
+    }
+
+    /* ── STATEMENT ── */
+    .statement {
+      padding: 120px 6vw;
+      text-align: center;
+      background: var(--deep);
+      position: relative;
+    }
+    .statement::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(180,170,150,0.15));
+    }
+    .statement blockquote {
+      font-family: 'Noto Serif', serif;
+      font-weight: 300;
+      font-size: clamp(1.25rem, 2.5vw, 2rem);
+      line-height: 1.8;
+      color: var(--paper);
+      max-width: 660px;
+      margin: 0 auto;
+      letter-spacing: 0.04em;
+    }
+    .statement blockquote em { font-style: italic; color: var(--gold-l); }
+    .statement cite {
+      display: block;
+      margin-top: 36px;
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--ash);
+      font-style: normal;
+    }
+
+    /* ── SECTION COMMONS ── */
+    .s-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .s-title {
+      font-family: 'Noto Serif', serif;
+      font-weight: 300;
+      font-size: clamp(1.7rem, 3vw, 2.8rem);
+      line-height: 1.25;
+      color: var(--white);
+      letter-spacing: 0.02em;
+      margin-bottom: 18px;
+    }
+    .s-lead {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--mid);
+      max-width: 480px;
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--charcoal); padding: 120px 6vw; }
+    .servicios-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 72px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--line);
+    }
+    .s-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      border-top: 1px solid var(--line-s);
+      padding: 40px 0;
+      transition: background 0.4s;
+    }
+    .s-item:last-child { border-bottom: 1px solid var(--line-s); }
+    .s-item:hover { background: rgba(255,255,255,0.015); }
+    .s-item-num {
+      font-size: 0.6rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      padding-top: 4px;
+    }
+    .s-item-body h3 {
+      font-family: 'Noto Serif', serif;
+      font-weight: 400;
+      font-size: 1.12rem;
+      color: var(--white);
+      margin-bottom: 10px;
+      letter-spacing: 0.03em;
+    }
+    .s-item-body p {
+      font-size: 0.83rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--mid);
+    }
+
+    /* ── NOSOTROS ── */
+    #nosotros {
+      background: var(--deep);
+      padding: 120px 6vw;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+    .nos-visual {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: var(--charcoal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .nos-visual::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border: 1px solid var(--line);
+    }
+    .corner-tl, .corner-br { position: absolute; width: 28px; height: 28px; }
+    .corner-tl { top: 8px; left: 8px; border-top: 1px solid rgba(140,122,85,0.45); border-left: 1px solid rgba(140,122,85,0.45); }
+    .corner-br { bottom: 8px; right: 8px; border-bottom: 1px solid rgba(140,122,85,0.45); border-right: 1px solid rgba(140,122,85,0.45); }
+    .nos-kanji {
+      font-size: 7rem;
+      color: rgba(255,255,255,0.03);
+      font-family: 'Noto Serif', serif;
+      user-select: none;
+      line-height: 1;
+    }
+    .nos-caption {
+      position: absolute;
+      bottom: 28px; left: 0; right: 0;
+      text-align: center;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      color: var(--ash);
+      text-transform: uppercase;
+    }
+    .nos-text p {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--mid);
+      margin-bottom: 16px;
+    }
+    .stats-row {
+      display: flex;
+      margin-top: 60px;
+      border-top: 1px solid var(--line);
+    }
+    .stat {
+      flex: 1;
+      padding: 36px 32px 0 0;
+      border-right: 1px solid var(--line);
+      margin-right: 32px;
+    }
+    .stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .stat-num {
+      font-family: 'Noto Serif', serif;
+      font-weight: 300;
+      font-size: 2.4rem;
+      color: var(--white);
+      display: block;
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      display: block;
+      margin-top: 10px;
+    }
+
+    /* ── COBERTURAS ── */
+    #coberturas { background: var(--charcoal); padding: 100px 6vw; }
+    .cob-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .cob-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .cob-tag {
+      border: 1px solid var(--line);
+      color: var(--pale);
+      padding: 9px 20px;
+      font-size: 0.76rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      transition: border-color 0.3s, color 0.3s;
+      cursor: default;
+    }
+    .cob-tag:hover { border-color: var(--gold); color: var(--white); }
+
+    /* ── PROCESO ── */
+    #proceso { background: var(--deep); padding: 120px 6vw; }
+    .proceso-header { text-align: center; max-width: 500px; margin: 0 auto 80px; }
+    .proceso-steps {
+      display: flex;
+      flex-direction: column;
+      max-width: 660px;
+      margin: 0 auto;
+    }
+    .p-step {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 28px;
+      padding: 40px 0;
+      border-top: 1px solid var(--line-s);
+    }
+    .p-step:last-child { border-bottom: 1px solid var(--line-s); }
+    .p-connector { display: flex; flex-direction: column; align-items: center; }
+    .p-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--gold); margin-top: 4px; flex-shrink: 0; }
+    .p-line { width: 1px; flex: 1; background: linear-gradient(to bottom, rgba(140,122,85,0.3), transparent); margin-top: 8px; }
+    .p-step:last-child .p-line { display: none; }
+    .p-num { font-size: 0.58rem; letter-spacing: 0.22em; color: var(--gold); display: block; margin-bottom: 10px; }
+    .p-step h3 { font-family: 'Noto Serif', serif; font-weight: 400; font-size: 1.05rem; color: var(--white); margin-bottom: 10px; }
+    .p-step p { font-size: 0.83rem; font-weight: 300; line-height: 1.85; color: var(--mid); }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--charcoal); padding: 120px 6vw; }
+    .contacto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      margin-top: 72px;
+    }
+    .c-list { display: flex; flex-direction: column; }
+    .c-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 24px;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+      align-items: baseline;
+    }
+    .c-row:last-child { border-bottom: 1px solid var(--line); }
+    .c-row-label { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); font-weight: 300; }
+    .c-row-val { font-size: 0.88rem; font-weight: 300; color: var(--pale); line-height: 1.7; }
+    .c-row-val a { color: var(--pale); text-decoration: none; }
+    .c-row-val em { font-style: normal; color: var(--gold-l); font-size: 0.8rem; }
+    .form-title { font-family: 'Noto Serif', serif; font-weight: 300; font-size: 1.5rem; color: var(--white); margin-bottom: 40px; letter-spacing: 0.04em; }
+    .form-field { margin-bottom: 28px; }
+    .form-field label { display: block; font-size: 0.6rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(180,170,150,0.18);
+      padding: 12px 0;
+      font-family: 'Noto Sans', sans-serif;
+      font-weight: 300;
+      font-size: 0.88rem;
+      color: var(--paper);
+      outline: none;
+      transition: border-color 0.3s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: var(--ash); }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-bottom-color: var(--gold); }
+    .form-field textarea { height: 80px; resize: none; }
+    .form-field select { color: var(--pale); cursor: pointer; }
+    .form-field select option { background: var(--charcoal); color: var(--paper); }
+    .btn-submit {
+      background: transparent;
+      border: 1px solid rgba(140,122,85,0.4);
+      color: var(--gold-l);
+      padding: 14px 40px;
+      font-family: 'Noto Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.4s, color 0.4s, border-color 0.4s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover { background: rgba(140,122,85,0.1); border-color: var(--gold-l); color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--ink); padding: 80px 6vw 48px; border-top: 1px solid var(--line); }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 36px;
+    }
+    .f-logo { font-family: 'Noto Serif', serif; font-weight: 400; font-size: 1.1rem; color: var(--white); letter-spacing: 0.1em; margin-bottom: 6px; }
+    .f-since { font-size: 0.6rem; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; display: block; margin-bottom: 20px; }
+    .f-desc { font-size: 0.8rem; font-weight: 300; line-height: 1.9; color: var(--ash); max-width: 260px; }
+    .f-col h4 { font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+    .f-col ul { list-style: none; }
+    .f-col ul li { margin-bottom: 12px; }
+    .f-col ul a { font-size: 0.8rem; font-weight: 300; color: var(--pale); text-decoration: none; transition: color 0.3s; }
+    .f-col ul a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.66rem;
+      color: var(--ash);
+      flex-wrap: wrap;
+      gap: 12px;
+      letter-spacing: 0.08em;
+    }
+    .f-badge { border: 1px solid rgba(140,122,85,0.2); color: var(--gold-l); padding: 8px 20px; font-size: 0.66rem; letter-spacing: 0.14em; }
+
+    /* ── FLOATING ── */
+    .float-cta {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 300;
+      background: var(--charcoal);
+      border: 1px solid rgba(140,122,85,0.3);
+      color: var(--gold-l);
+      padding: 13px 24px;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: border-color 0.3s, color 0.3s;
+      opacity: 0;
+      animation: fadeIn 1s 3s ease forwards;
+    }
+    .float-cta:hover { border-color: var(--gold-l); color: var(--white); }
+    .float-pulse { width: 6px; height: 6px; border-radius: 50%; background: #4caf74; animation: blink 2.5s infinite; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      #nosotros { grid-template-columns: 1fr; gap: 60px; }
+      .servicios-header { grid-template-columns: 1fr; gap: 40px; }
+      .cob-inner { grid-template-columns: 1fr; gap: 48px; }
+      .contacto-grid { grid-template-columns: 1fr; gap: 60px; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .stats-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="tel:+541142210000">Emergencias 24hs — (011) 4221-0000</a>
+  <span class="sep">·</span>
+  Banfield &nbsp;·&nbsp; Lomas de Zamora &nbsp;·&nbsp; Gran Buenos Aires
+</div>
+
+<nav>
+  <a href="#" class="nav-logo">
+    Cochería Comini
+    <span>Servicios Fúnebres · Est. 1952</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#coberturas">Coberturas</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="tel:+541142210000" class="nav-emergency">☎ Emergencias 24hs</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="hero-canvas" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="heroGlow" cx="50%" cy="65%" r="50%">
+        <stop offset="0%" stop-color="#8c7a55" stop-opacity="0.07"/>
+        <stop offset="100%" stop-color="#0f0f0f" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1440" height="900" fill="url(#heroGlow)"/>
+    <circle cx="720" cy="450" r="380" stroke="rgba(140,122,85,0.05)" stroke-width="1" fill="none"/>
+    <circle cx="720" cy="450" r="240" stroke="rgba(140,122,85,0.04)" stroke-width="0.5" fill="none"/>
+    <circle cx="720" cy="450" r="120" stroke="rgba(140,122,85,0.03)" stroke-width="0.5" fill="none"/>
+    <line x1="0" y1="450" x2="1440" y2="450" stroke="rgba(140,122,85,0.025)" stroke-width="1"/>
+    <line x1="720" y1="0" x2="720" y2="900" stroke="rgba(140,122,85,0.025)" stroke-width="1"/>
+  </svg>
+
+  <!-- Petals -->
+  <svg class="petal" style="left:8%;animation-duration:15s;animation-delay:1s;width:10px;height:10px" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="6" ry="3" fill="rgba(176,154,110,0.3)" transform="rotate(30 10 10)"/></svg>
+  <svg class="petal" style="left:22%;animation-duration:19s;animation-delay:4s;width:8px;height:8px" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="6" ry="3" fill="rgba(176,154,110,0.2)" transform="rotate(-20 10 10)"/></svg>
+  <svg class="petal" style="left:55%;animation-duration:23s;animation-delay:7s;width:11px;height:11px" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="6" ry="3" fill="rgba(176,154,110,0.22)" transform="rotate(55 10 10)"/></svg>
+  <svg class="petal" style="left:78%;animation-duration:17s;animation-delay:10s;width:9px;height:9px" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="6" ry="3" fill="rgba(176,154,110,0.15)" transform="rotate(-40 10 10)"/></svg>
+  <svg class="petal" style="left:42%;animation-duration:21s;animation-delay:13s;width:7px;height:7px" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="6" ry="3" fill="rgba(176,154,110,0.18)" transform="rotate(15 10 10)"/></svg>
+  <svg class="petal" style="left:90%;animation-duration:25s;animation-delay:2s;width:8px;height:8px" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="6" ry="3" fill="rgba(176,154,110,0.12)" transform="rotate(70 10 10)"/></svg>
+
+  <div class="hero-inner">
+    <!-- Crest -->
+    <svg class="hero-kamon" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="30" stroke="rgba(176,154,110,0.35)" stroke-width="0.8"/>
+      <circle cx="32" cy="32" r="22" stroke="rgba(176,154,110,0.2)" stroke-width="0.5"/>
+      <path d="M38 20 A14 14 0 1 0 38 44" stroke="rgba(176,154,110,0.65)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <circle cx="32" cy="32" r="2" fill="rgba(176,154,110,0.45)"/>
+    </svg>
+
+    <p class="hero-pre">Cochería Comini &nbsp;·&nbsp; Desde 1952</p>
+    <h1>Con respeto y serenidad,<br>acompañamos <em>cada despedida.</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Servicio funerario integral en Banfield y el Gran Buenos Aires.<br>Atención personalizada las 24 horas, los 365 días del año.</p>
+    <div class="hero-ctas">
+      <a href="#contacto" class="btn-main">Consultar servicio</a>
+      <a href="#servicios" class="btn-ghost">Ver servicios</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<div class="statement reveal">
+  <blockquote>
+    "En los momentos más difíciles,<br><em>la serenidad es el mayor regalo</em><br>que podemos ofrecer a quienes despiden a un ser querido."
+  </blockquote>
+  <cite>— Cochería Comini, Banfield</cite>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="servicios-header reveal">
+    <div>
+      <span class="s-eyebrow">Nuestros servicios</span>
+      <h2 class="s-title">Todo lo que necesitás,<br>con plena dedicación.</h2>
+    </div>
+    <p class="s-lead">Nos ocupamos de cada detalle del proceso para que la familia pueda concentrarse en lo que verdaderamente importa.</p>
+  </div>
+  <div class="reveal">
+    <div class="s-item"><span class="s-item-num">01</span><div class="s-item-body"><h3>Sepelio Completo</h3><p>Retiro del fallecido, preparación, provisión de ataúd, velatorio y traslado al cementerio. Gestión íntegra del proceso con total discreción.</p></div></div>
+    <div class="s-item"><span class="s-item-num">02</span><div class="s-item-body"><h3>Cremación</h3><p>Servicio de cremación con todas las gestiones ante el Registro Civil y el crematorio, con absoluto respeto por el fallecido y su familia.</p></div></div>
+    <div class="s-item"><span class="s-item-num">03</span><div class="s-item-body"><h3>Sala Velatoria</h3><p>Salas privadas y confortables para despedir a su ser querido en un ambiente íntimo, tranquilo y debidamente equipado.</p></div></div>
+    <div class="s-item"><span class="s-item-num">04</span><div class="s-item-body"><h3>Traslados</h3><p>Traslados locales, provinciales y nacionales. Coordinación de repatriaciones con toda la documentación requerida.</p></div></div>
+    <div class="s-item"><span class="s-item-num">05</span><div class="s-item-body"><h3>Gestión de Trámites</h3><p>Tramitación de partida de defunción, subsidios de PAMI y ANSES, y todos los documentos necesarios para la familia.</p></div></div>
+    <div class="s-item"><span class="s-item-num">06</span><div class="s-item-body"><h3>Atención Inmediata 24hs</h3><p>Disponibles en todo momento. Un asesor personal lo acompaña desde el primer llamado hasta el cierre del proceso.</p></div></div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="nos-visual reveal">
+    <div class="corner-tl"></div>
+    <div class="corner-br"></div>
+    <div class="nos-kanji">家</div>
+    <div class="nos-caption">Banfield · Lomas de Zamora · Est. 1952</div>
+  </div>
+  <div class="nos-text reveal">
+    <span class="s-eyebrow">Quiénes somos</span>
+    <h2 class="s-title">Una empresa familiar con más de siete décadas de trayectoria.</h2>
+    <p>Cochería Comini nació en Banfield en 1952 como una empresa de familia, con la convicción de que en los momentos más delicados las personas merecen ser acompañadas con calidez, eficiencia y absoluto respeto.</p>
+    <p>Hoy somos referentes en Lomas de Zamora y todo el Gran Buenos Aires. Nuestro equipo trabaja con discreción, contención emocional y una atención verdaderamente personalizada, sin importar la hora ni el día.</p>
+    <div class="stats-row">
+      <div class="stat"><span class="stat-num">70+</span><span class="stat-lbl">Años de experiencia</span></div>
+      <div class="stat"><span class="stat-num">24hs</span><span class="stat-lbl">Atención permanente</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-lbl">Dedicación familiar</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COBERTURAS -->
+<section id="coberturas">
+  <div class="cob-inner reveal">
+    <div>
+      <span class="s-eyebrow">Obras sociales y prepagas</span>
+      <h2 class="s-title">Trabajamos con las principales coberturas.</h2>
+      <p class="s-lead">Gestionamos subsidios y servicios funerarios en convenio con PAMI, ANSES y las principales obras sociales del país. Consultenos sin compromiso.</p>
+    </div>
+    <div class="cob-grid">
+      <div class="cob-tag">PAMI</div><div class="cob-tag">ANSES</div><div class="cob-tag">IOMA</div>
+      <div class="cob-tag">OSDE</div><div class="cob-tag">Swiss Medical</div><div class="cob-tag">Galeno</div>
+      <div class="cob-tag">Medicus</div><div class="cob-tag">OMINT</div><div class="cob-tag">Hospital Italiano</div>
+      <div class="cob-tag">UOCRA</div><div class="cob-tag">OSECAC</div><div class="cob-tag">Consultar otras</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="proceso-header reveal">
+    <span class="s-eyebrow">Cómo trabajamos</span>
+    <h2 class="s-title">Un proceso claro en el momento que más lo necesitás.</h2>
+  </div>
+  <div class="proceso-steps reveal">
+    <div class="p-step"><div class="p-connector"><div class="p-dot"></div><div class="p-line"></div></div><div><span class="p-num">01</span><h3>Primer contacto</h3><p>Llamanos a cualquier hora. Un asesor atiende de inmediato y coordina la asistencia inicial.</p></div></div>
+    <div class="p-step"><div class="p-connector"><div class="p-dot"></div><div class="p-line"></div></div><div><span class="p-num">02</span><h3>Retiro y preparación</h3><p>Nos encargamos del traslado del fallecido y la preparación del cuerpo con total respeto y cuidado.</p></div></div>
+    <div class="p-step"><div class="p-connector"><div class="p-dot"></div><div class="p-line"></div></div><div><span class="p-num">03</span><h3>Gestión de trámites</h3><p>Tramitamos toda la documentación ante el Registro Civil, el cementerio y las obras sociales.</p></div></div>
+    <div class="p-step"><div class="p-connector"><div class="p-dot"></div><div class="p-line"></div></div><div><span class="p-num">04</span><h3>Velatorio y sepelio</h3><p>Organizamos el velatorio y el servicio final según los deseos y tradiciones de la familia.</p></div></div>
+    <div class="p-step"><div class="p-connector"><div class="p-dot"></div><div class="p-line"></div></div><div><span class="p-num">05</span><h3>Acompañamiento posterior</h3><p>Seguimos disponibles para asistirlos en todos los trámites y gestiones que sigan al sepelio.</p></div></div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="reveal">
+    <span class="s-eyebrow">Contacto</span>
+    <h2 class="s-title">Estamos aquí para acompañarle.</h2>
+  </div>
+  <div class="contacto-grid reveal">
+    <div>
+      <div class="c-list">
+        <div class="c-row"><span class="c-row-label">Emergencias 24hs</span><span class="c-row-val"><a href="tel:+541142210000">(011) 4221-0000</a></span></div>
+        <div class="c-row"><span class="c-row-label">WhatsApp</span><span class="c-row-val">+54 9 11 5555-0000</span></div>
+        <div class="c-row"><span class="c-row-label">Email</span><span class="c-row-val">info@cocheriacomini.com.ar</span></div>
+        <div class="c-row"><span class="c-row-label">Dirección</span><span class="c-row-val">Av. Hipólito Yrigoyen 2500, Banfield<br>Lomas de Zamora, Pcia. de Buenos Aires</span></div>
+        <div class="c-row"><span class="c-row-label">Oficina</span><span class="c-row-val">Lun–Vie 8 a 18hs · Sáb 9 a 13hs<br><em>Emergencias: 24hs los 365 días</em></span></div>
+      </div>
+    </div>
+    <div>
+      <p class="form-title">Envíenos un mensaje</p>
+      <form onsubmit="handleForm(event)">
+        <div class="form-field"><label>Nombre completo</label><input type="text" placeholder="Su nombre" required /></div>
+        <div class="form-field"><label>Teléfono</label><input type="tel" placeholder="Número de contacto" /></div>
+        <div class="form-field">
+          <label>Motivo de consulta</label>
+          <select><option value="" disabled selected>Seleccionar —</option><option>Consulta sobre sepelio</option><option>Consulta sobre cremación</option><option>Información de precios</option><option>Cobertura de obra social / prepaga</option><option>Traslado</option><option>Otro</option></select>
+        </div>
+        <div class="form-field"><label>Mensaje</label><textarea placeholder="Su consulta (opcional)"></textarea></div>
+        <button type="submit" class="btn-submit">Enviar consulta</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="f-logo">Cochería Comini</div>
+      <span class="f-since">Servicios Fúnebres · Est. 1952</span>
+      <p class="f-desc">Acompañamos a las familias con respeto, calidez y profesionalismo desde hace más de siete décadas en el Gran Buenos Aires.</p>
+    </div>
+    <div class="f-col">
+      <h4>Servicios</h4>
+      <ul><li><a href="#">Sepelio completo</a></li><li><a href="#">Cremación</a></li><li><a href="#">Sala velatoria</a></li><li><a href="#">Traslados</a></li><li><a href="#">Gestión de trámites</a></li></ul>
+    </div>
+    <div class="f-col">
+      <h4>Información</h4>
+      <ul><li><a href="#">Quiénes somos</a></li><li><a href="#">Coberturas</a></li><li><a href="#">Subsidios PAMI</a></li><li><a href="#">Preguntas frecuentes</a></li><li><a href="#">Contacto</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Cochería Comini. Todos los derechos reservados.</span>
+    <div class="f-badge">Emergencias 24hs — (011) 4221-0000</div>
+  </div>
+</footer>
+
+<a href="tel:+541142210000" class="float-cta">
+  <div class="float-pulse"></div>
+  Llamar ahora
+</a>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  els.forEach(el => io.observe(el));
+
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = 'Enviado  ✓';
+    btn.style.borderColor = 'rgba(76,175,116,0.5)';
+    btn.style.color = '#4caf74';
+    setTimeout(() => {
+      btn.textContent = 'Enviar consulta';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+      e.target.reset();
+    }, 3500);
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>

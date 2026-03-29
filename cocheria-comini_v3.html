@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cochería Comini — Servicios Fúnebres</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --washi:   #f0ece3;   /* papel washi — fondo principal */
+      --mist:    #e4dfd5;   /* niebla — fondo secundario */
+      --stone:   #c8c0b0;   /* piedra — bordes y líneas */
+      --shadow:  #8a8278;   /* sombra — texto secundario */
+      --sumi:    #2a2620;   /* tinta sumi — texto principal */
+      --moss:    #5c6b4a;   /* musgo — único acento de color */
+      --ink:     #1a1714;   /* tinta oscura — énfasis */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-weight: 300;
+      background: var(--washi);
+      color: var(--sumi);
+      overflow-x: hidden;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6vw;
+      height: 64px;
+      background: rgba(240,236,227,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(200,192,176,0.4);
+    }
+    .nav-logo {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--sumi);
+      text-decoration: none;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+    }
+    .nav-links a {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--shadow);
+      text-decoration: none;
+      transition: color 0.4s;
+    }
+    .nav-links a:hover { color: var(--sumi); }
+    .nav-tel {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      color: var(--moss);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-tel:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 6vw 80px;
+      background: var(--washi);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Enso circle — the single unforgettable element */
+    .enso-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .enso {
+      width: min(70vw, 600px);
+      height: min(70vw, 600px);
+      opacity: 0;
+      animation: ensoAppear 3s 0.5s ease forwards;
+    }
+    @keyframes ensoAppear {
+      from { opacity: 0; transform: scale(0.94) rotate(-8deg); }
+      to   { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .hero-since {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: softUp 1.2s 1.8s ease forwards;
+    }
+    .hero h1 {
+      font-family: 'EB Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(2.4rem, 5vw, 4.8rem);
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      color: var(--sumi);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: softUp 1.2s 2.1s ease forwards;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--shadow);
+    }
+    .hero-brushstroke {
+      width: 40px;
+      height: 2px;
+      background: var(--moss);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: softUp 1.2s 2.4s ease forwards;
+    }
+    .hero-sub {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      line-height: 2.2;
+      color: var(--shadow);
+      max-width: 380px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: softUp 1.2s 2.7s ease forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: softUp 1.2s 3s ease forwards;
+    }
+    .btn-zen {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 36px;
+      border: 1px solid var(--stone);
+      color: var(--sumi);
+      transition: border-color 0.5s, color 0.5s, background 0.5s;
+    }
+    .btn-zen:hover { border-color: var(--sumi); background: var(--sumi); color: var(--washi); }
+    .btn-zen-ghost {
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 36px;
+      color: var(--shadow);
+      transition: color 0.4s;
+    }
+    .btn-zen-ghost:hover { color: var(--sumi); }
+
+    /* ── SECTIONS ── */
+    section { padding: 120px 6vw; }
+
+    .s-tag {
+      display: block;
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.48em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 24px;
+    }
+    .s-h {
+      font-family: 'EB Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 1.25;
+      letter-spacing: 0.02em;
+      color: var(--sumi);
+      margin-bottom: 20px;
+    }
+    .s-h em { font-style: italic; color: var(--shadow); }
+    .s-body {
+      font-size: 0.86rem;
+      font-weight: 300;
+      line-height: 2.1;
+      color: var(--shadow);
+      max-width: 500px;
+    }
+
+    /* ── INTRO ── */
+    #intro {
+      background: var(--mist);
+      display: grid;
+      grid-template-columns: 1fr 2px 1fr;
+      gap: 0;
+      align-items: center;
+      padding: 0;
+      overflow: hidden;
+    }
+    .intro-left {
+      padding: 120px 8vw 120px 6vw;
+    }
+    .intro-divider {
+      background: var(--stone);
+      opacity: 0.4;
+      align-self: stretch;
+    }
+    .intro-right {
+      padding: 120px 6vw 120px 8vw;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .intro-right blockquote {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--sumi);
+      letter-spacing: 0.02em;
+    }
+    .intro-right cite {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--stone);
+      font-style: normal;
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--washi); }
+    .servicios-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+      margin-bottom: 80px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(200,192,176,0.5);
+    }
+    .s-list { display: flex; flex-direction: column; }
+    .s-row {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 0 24px;
+      align-items: start;
+      padding: 36px 0;
+      border-top: 1px solid rgba(200,192,176,0.4);
+      transition: background 0.5s;
+      cursor: default;
+    }
+    .s-row:last-child { border-bottom: 1px solid rgba(200,192,176,0.4); }
+    .s-row:hover { background: rgba(200,192,176,0.08); }
+    .s-row-num {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: var(--moss);
+      padding-top: 5px;
+    }
+    .s-row h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--sumi);
+      margin-bottom: 8px;
+    }
+    .s-row p {
+      font-size: 0.81rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--shadow);
+    }
+    .s-row-arrow {
+      font-size: 0.65rem;
+      color: var(--stone);
+      padding-top: 6px;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .s-row:hover .s-row-arrow { color: var(--moss); transform: translateX(4px); }
+
+    /* ── NOSOTROS ── */
+    #nosotros {
+      background: var(--mist);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+    .nos-stone {
+      aspect-ratio: 4/5;
+      background: var(--washi);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* Raked sand pattern */
+    .nos-stone svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.06;
+    }
+    .nos-stone-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .nos-stone-inner .zen-circle {
+      display: block;
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(42,38,32,0.07);
+      font-family: 'EB Garamond', serif;
+      user-select: none;
+    }
+    .nos-stone-tag {
+      position: absolute;
+      bottom: 28px; left: 0; right: 0;
+      text-align: center;
+      font-size: 0.56rem;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .nos-content .s-h { margin-bottom: 24px; }
+    .nos-content p {
+      font-size: 0.86rem;
+      font-weight: 300;
+      line-height: 2.1;
+      color: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 60px;
+      padding-top: 48px;
+      border-top: 1px solid rgba(200,192,176,0.5);
+    }
+    .stat {
+      padding-right: 24px;
+      border-right: 1px solid rgba(200,192,176,0.4);
+      margin-right: 24px;
+    }
+    .stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .stat-n {
+      font-family: 'EB Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      color: var(--sumi);
+      display: block;
+      line-height: 1;
+    }
+    .stat-l {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--shadow);
+      display: block;
+      margin-top: 8px;
+    }
+
+    /* ── COBERTURAS ── */
+    #coberturas { background: var(--washi); }
+    .cob-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .cob-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .cob-pill {
+      border: 1px solid rgba(200,192,176,0.6);
+      color: var(--shadow);
+      padding: 9px 22px;
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      transition: border-color 0.4s, color 0.4s;
+      cursor: default;
+    }
+    .cob-pill:hover { border-color: var(--moss); color: var(--sumi); }
+
+    /* ── PROCESO ── */
+    #proceso { background: var(--mist); }
+    .proceso-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .proceso-header { text-align: center; margin-bottom: 80px; }
+    .p-item {
+      display: grid;
+      grid-template-columns: 1px 1fr;
+      gap: 0 48px;
+      padding-bottom: 56px;
+      position: relative;
+    }
+    .p-item:last-child { padding-bottom: 0; }
+    .p-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .p-spine-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      border: 1px solid var(--moss);
+      background: var(--mist);
+      flex-shrink: 0;
+      margin-top: 5px;
+      position: relative;
+      z-index: 1;
+    }
+    .p-spine-line {
+      flex: 1;
+      width: 1px;
+      background: rgba(200,192,176,0.5);
+      margin-top: 8px;
+    }
+    .p-item:last-child .p-spine-line { display: none; }
+    .p-text span {
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      color: var(--moss);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .p-text h3 {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--sumi);
+      margin-bottom: 10px;
+    }
+    .p-text p {
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--shadow);
+    }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--washi); }
+    .contacto-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      margin-top: 72px;
+    }
+    .c-items { display: flex; flex-direction: column; }
+    .c-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 20px;
+      padding: 20px 0;
+      border-top: 1px solid rgba(200,192,176,0.45);
+      align-items: baseline;
+    }
+    .c-item:last-child { border-bottom: 1px solid rgba(200,192,176,0.45); }
+    .c-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--moss);
+    }
+    .c-val { font-size: 0.86rem; font-weight: 300; color: var(--sumi); line-height: 1.7; }
+    .c-val a { color: var(--sumi); text-decoration: none; }
+    .c-val small { color: var(--shadow); font-size: 0.78rem; }
+
+    .form-h {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--sumi);
+      margin-bottom: 40px;
+      letter-spacing: 0.02em;
+    }
+    .f-group { margin-bottom: 28px; }
+    .f-group label {
+      display: block;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 10px;
+    }
+    .f-group input, .f-group select, .f-group textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(200,192,176,0.6);
+      padding: 10px 0;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-weight: 300;
+      font-size: 0.86rem;
+      color: var(--sumi);
+      outline: none;
+      transition: border-color 0.4s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    .f-group input::placeholder, .f-group textarea::placeholder { color: var(--stone); }
+    .f-group input:focus, .f-group select:focus, .f-group textarea:focus { border-bottom-color: var(--moss); }
+    .f-group textarea { height: 80px; resize: none; }
+    .f-group select { color: var(--shadow); cursor: pointer; }
+    .f-group select option { color: var(--sumi); background: var(--washi); }
+    .btn-send-zen {
+      background: transparent;
+      border: 1px solid rgba(92,107,74,0.5);
+      color: var(--moss);
+      padding: 13px 40px;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.5s, color 0.5s, border-color 0.5s;
+      margin-top: 8px;
+    }
+    .btn-send-zen:hover { background: var(--moss); color: var(--washi); border-color: var(--moss); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--sumi);
+      color: var(--shadow);
+      padding: 80px 6vw 48px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(138,130,120,0.2);
+      margin-bottom: 36px;
+    }
+    .f-brand {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.15rem;
+      color: var(--washi);
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .f-sub {
+      font-size: 0.58rem;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--moss);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .f-desc {
+      font-size: 0.78rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(138,130,120,0.9);
+      max-width: 260px;
+    }
+    .f-col h4 {
+      font-size: 0.56rem;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 20px;
+    }
+    .f-col ul { list-style: none; }
+    .f-col li { margin-bottom: 12px; }
+    .f-col a {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: rgba(138,130,120,0.9);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .f-col a:hover { color: var(--washi); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.65rem;
+      color: rgba(138,130,120,0.6);
+      flex-wrap: wrap;
+      gap: 12px;
+      letter-spacing: 0.08em;
+    }
+    .f-badge {
+      border: 1px solid rgba(92,107,74,0.3);
+      color: var(--moss);
+      padding: 8px 18px;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+    }
+
+    /* ── FLOAT ── */
+    .float-btn {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 300;
+      background: var(--washi);
+      border: 1px solid rgba(200,192,176,0.6);
+      color: var(--sumi);
+      padding: 13px 24px;
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 24px rgba(42,38,32,0.08);
+      transition: background 0.4s, color 0.4s, border-color 0.4s;
+      opacity: 0;
+      animation: softUp 1s 4s ease forwards;
+    }
+    .float-btn:hover { background: var(--sumi); color: var(--washi); border-color: var(--sumi); }
+    .pulse {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--moss);
+      animation: blink 2.5s infinite;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes softUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 1.1s ease, transform 1.1s ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      #intro { grid-template-columns: 1fr; }
+      .intro-divider { display: none; }
+      .intro-left, .intro-right { padding: 72px 6vw; }
+      .servicios-top { grid-template-columns: 1fr; gap: 48px; }
+      #nosotros { grid-template-columns: 1fr; gap: 60px; }
+      .cob-layout { grid-template-columns: 1fr; gap: 48px; }
+      .contacto-layout { grid-template-columns: 1fr; gap: 60px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: 1fr; gap: 24px; }
+      .s-row { grid-template-columns: 48px 1fr; }
+      .s-row-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Cochería Comini</a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#coberturas">Coberturas</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="tel:+541142210000" class="nav-tel">Emergencias 24hs</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <!-- Ensō — brush circle, the zen symbol of wholeness -->
+  <div class="enso-wrap">
+    <svg class="enso" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M 320 200
+           A 120 120 0 1 0 218 322
+           Q 205 330 195 326
+           Q 175 318 168 308"
+        stroke="rgba(42,38,32,0.07)"
+        stroke-width="28"
+        stroke-linecap="round"
+        fill="none"
+      />
+      <path
+        d="M 320 200
+           A 120 120 0 1 0 218 322
+           Q 205 330 195 326
+           Q 175 318 168 308"
+        stroke="rgba(92,107,74,0.12)"
+        stroke-width="2"
+        stroke-linecap="round"
+        fill="none"
+      />
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <span class="hero-since">Cochería Comini · Banfield · Desde 1952</span>
+    <h1>Con respeto y serenidad,<br><em>acompañamos cada despedida.</em></h1>
+    <div class="hero-brushstroke"></div>
+    <p class="hero-sub">
+      Servicio funerario integral en el Gran Buenos Aires.<br>
+      Atención personalizada las 24 horas.
+    </p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-zen">Consultar servicio</a>
+      <a href="#servicios" class="btn-zen-ghost">Ver servicios</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-left reveal">
+    <span class="s-tag">Nuestra filosofía</span>
+    <h2 class="s-h">La paz interior<br><em>como ofrenda.</em></h2>
+    <p class="s-body">En cada despedida hay un acto sagrado. Nos ocupamos de todo para que la familia pueda estar presente en lo que verdaderamente importa: el silencio, el recuerdo, la despedida.</p>
+  </div>
+  <div class="intro-divider"></div>
+  <div class="intro-right reveal">
+    <blockquote>
+      "El que sabe caminar no deja huellas.<br>
+      El que sabe hablar no comete errores.<br>
+      El sabio sirve sin que se lo pidan."
+    </blockquote>
+    <cite>— Tao Te Ching · Lao Tzu</cite>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="servicios-top reveal">
+    <div>
+      <span class="s-tag">Nuestros servicios</span>
+      <h2 class="s-h">Todo lo que necesitás,<br>en un solo lugar.</h2>
+    </div>
+    <p class="s-body">
+      Nos encargamos de cada detalle del proceso con discreción, calidez y la eficiencia que solo da la experiencia de siete décadas.
+    </p>
+  </div>
+  <div class="s-list reveal">
+    <div class="s-row">
+      <span class="s-row-num">01</span>
+      <div><h3>Sepelio Completo</h3><p>Retiro del fallecido, preparación, provisión de ataúd, velatorio y traslado al cementerio. Gestión íntegra del proceso.</p></div>
+      <span class="s-row-arrow">→</span>
+    </div>
+    <div class="s-row">
+      <span class="s-row-num">02</span>
+      <div><h3>Cremación</h3><p>Servicio de cremación con todas las gestiones ante el Registro Civil y el crematorio, con absoluto respeto.</p></div>
+      <span class="s-row-arrow">→</span>
+    </div>
+    <div class="s-row">
+      <span class="s-row-num">03</span>
+      <div><h3>Sala Velatoria</h3><p>Salas privadas y confortables para una despedida íntima, cálida y adecuadamente equipada.</p></div>
+      <span class="s-row-arrow">→</span>
+    </div>
+    <div class="s-row">
+      <span class="s-row-num">04</span>
+      <div><h3>Traslados</h3><p>Traslados locales, provinciales y nacionales. Coordinación de repatriaciones con toda la documentación necesaria.</p></div>
+      <span class="s-row-arrow">→</span>
+    </div>
+    <div class="s-row">
+      <span class="s-row-num">05</span>
+      <div><h3>Gestión de Trámites</h3><p>Tramitación de partida de defunción, subsidios de PAMI y ANSES, y toda la documentación para la familia.</p></div>
+      <span class="s-row-arrow">→</span>
+    </div>
+    <div class="s-row">
+      <span class="s-row-num">06</span>
+      <div><h3>Atención Inmediata 24hs</h3><p>Disponibles en todo momento. Un asesor personal lo acompaña desde el primer llamado.</p></div>
+      <span class="s-row-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="nos-stone reveal">
+    <!-- Raked sand / karesansui pattern -->
+    <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="rake" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M0 8 Q20 4 40 8" stroke="#2a2620" stroke-width="0.6" fill="none"/>
+          <path d="M0 16 Q20 12 40 16" stroke="#2a2620" stroke-width="0.6" fill="none"/>
+          <path d="M0 24 Q20 20 40 24" stroke="#2a2620" stroke-width="0.6" fill="none"/>
+          <path d="M0 32 Q20 28 40 32" stroke="#2a2620" stroke-width="0.6" fill="none"/>
+        </pattern>
+      </defs>
+      <rect width="400" height="500" fill="url(#rake)"/>
+      <!-- Stone / rock -->
+      <ellipse cx="200" cy="250" rx="55" ry="40" fill="rgba(42,38,32,0.06)" stroke="rgba(42,38,32,0.1)" stroke-width="0.8"/>
+      <!-- Ripple rings around stone -->
+      <ellipse cx="200" cy="250" rx="80" ry="55" fill="none" stroke="rgba(42,38,32,0.05)" stroke-width="0.6"/>
+      <ellipse cx="200" cy="250" rx="110" ry="72" fill="none" stroke="rgba(42,38,32,0.04)" stroke-width="0.5"/>
+    </svg>
+    <div class="nos-stone-inner">
+      <span class="zen-circle">静</span>
+    </div>
+    <div class="nos-stone-tag">Serenidad · Silencio · Respeto</div>
+  </div>
+
+  <div class="nos-content reveal">
+    <span class="s-tag">Quiénes somos</span>
+    <h2 class="s-h">Una empresa familiar<br>con más de siete<br>décadas de trayectoria.</h2>
+    <p>Cochería Comini nació en Banfield en 1952 como una empresa de familia, con la convicción de que en los momentos más delicados las personas merecen ser acompañadas con calidez y absoluto respeto.</p>
+    <p>Hoy somos referentes en Lomas de Zamora y todo el Gran Buenos Aires. Nuestro equipo trabaja con discreción, contención emocional y una atención verdaderamente personalizada.</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-n">70+</span><span class="stat-l">Años</span></div>
+      <div class="stat"><span class="stat-n">24hs</span><span class="stat-l">Siempre</span></div>
+      <div class="stat"><span class="stat-n">∞</span><span class="stat-l">Dedicación</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COBERTURAS -->
+<section id="coberturas">
+  <div class="cob-layout reveal">
+    <div>
+      <span class="s-tag">Coberturas</span>
+      <h2 class="s-h">Obras sociales<br>y prepagas.</h2>
+      <p class="s-body">Gestionamos subsidios en convenio con PAMI, ANSES y las principales obras sociales del país. Consultenos sin compromiso.</p>
+    </div>
+    <div class="cob-pills">
+      <div class="cob-pill">PAMI</div>
+      <div class="cob-pill">ANSES</div>
+      <div class="cob-pill">IOMA</div>
+      <div class="cob-pill">OSDE</div>
+      <div class="cob-pill">Swiss Medical</div>
+      <div class="cob-pill">Galeno</div>
+      <div class="cob-pill">Medicus</div>
+      <div class="cob-pill">OMINT</div>
+      <div class="cob-pill">Hospital Italiano</div>
+      <div class="cob-pill">UOCRA</div>
+      <div class="cob-pill">OSECAC</div>
+      <div class="cob-pill">Consultar otras</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="proceso-inner">
+    <div class="proceso-header reveal">
+      <span class="s-tag">Cómo trabajamos</span>
+      <h2 class="s-h">Un proceso claro<br>en el momento que<br><em>más lo necesitás.</em></h2>
+    </div>
+    <div class="reveal">
+      <div class="p-item">
+        <div class="p-spine"><div class="p-spine-dot"></div><div class="p-spine-line"></div></div>
+        <div class="p-text"><span>01</span><h3>Primer contacto</h3><p>Llamanos a cualquier hora. Un asesor atiende de inmediato y coordina la asistencia inicial con tranquilidad.</p></div>
+      </div>
+      <div class="p-item">
+        <div class="p-spine"><div class="p-spine-dot"></div><div class="p-spine-line"></div></div>
+        <div class="p-text"><span>02</span><h3>Retiro y preparación</h3><p>Nos encargamos del traslado del fallecido y la preparación del cuerpo con total respeto y cuidado.</p></div>
+      </div>
+      <div class="p-item">
+        <div class="p-spine"><div class="p-spine-dot"></div><div class="p-spine-line"></div></div>
+        <div class="p-text"><span>03</span><h3>Gestión de trámites</h3><p>Tramitamos toda la documentación ante el Registro Civil, el cementerio y las obras sociales.</p></div>
+      </div>
+      <div class="p-item">
+        <div class="p-spine"><div class="p-spine-dot"></div><div class="p-spine-line"></div></div>
+        <div class="p-text"><span>04</span><h3>Velatorio y sepelio</h3><p>Organizamos el velatorio y el servicio final según los deseos y tradiciones de la familia.</p></div>
+      </div>
+      <div class="p-item">
+        <div class="p-spine"><div class="p-spine-dot"></div><div class="p-spine-line"></div></div>
+        <div class="p-text"><span>05</span><h3>Acompañamiento posterior</h3><p>Seguimos disponibles para asistirlos en todos los trámites y gestiones que sigan al sepelio.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="reveal">
+    <span class="s-tag">Contacto</span>
+    <h2 class="s-h">Estamos aquí<br><em>para acompañarle.</em></h2>
+  </div>
+  <div class="contacto-layout reveal">
+    <div>
+      <div class="c-items">
+        <div class="c-item">
+          <span class="c-label">Emergencias</span>
+          <span class="c-val"><a href="tel:+541142210000">(011) 4221-0000</a></span>
+        </div>
+        <div class="c-item">
+          <span class="c-label">WhatsApp</span>
+          <span class="c-val">+54 9 11 5555-0000</span>
+        </div>
+        <div class="c-item">
+          <span class="c-label">Email</span>
+          <span class="c-val">info@cocheriacomini.com.ar</span>
+        </div>
+        <div class="c-item">
+          <span class="c-label">Dirección</span>
+          <span class="c-val">Av. H. Yrigoyen 2500, Banfield<br><small>Lomas de Zamora, Bs. As.</small></span>
+        </div>
+        <div class="c-item">
+          <span class="c-label">Oficina</span>
+          <span class="c-val">Lun–Vie 8 a 18hs · Sáb 9 a 13hs<br><small>Emergencias: todos los días, 24hs</small></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="form-h">Envíenos un mensaje</p>
+      <form onsubmit="handleForm(event)">
+        <div class="f-group"><label>Nombre</label><input type="text" placeholder="Su nombre completo" required /></div>
+        <div class="f-group"><label>Teléfono</label><input type="tel" placeholder="Número de contacto" /></div>
+        <div class="f-group">
+          <label>Motivo</label>
+          <select><option value="" disabled selected>Seleccionar —</option><option>Consulta sobre sepelio</option><option>Consulta sobre cremación</option><option>Información de precios</option><option>Obra social / prepaga</option><option>Traslado</option><option>Otro</option></select>
+        </div>
+        <div class="f-group"><label>Mensaje</label><textarea placeholder="Su consulta (opcional)"></textarea></div>
+        <button type="submit" class="btn-send-zen">Enviar consulta</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="f-brand">Cochería Comini</div>
+      <span class="f-sub">Servicios Fúnebres · Est. 1952</span>
+      <p class="f-desc">Acompañamos a las familias con respeto, calidez y profesionalismo desde hace más de siete décadas en el Gran Buenos Aires.</p>
+    </div>
+    <div class="f-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="#">Sepelio completo</a></li>
+        <li><a href="#">Cremación</a></li>
+        <li><a href="#">Sala velatoria</a></li>
+        <li><a href="#">Traslados</a></li>
+        <li><a href="#">Gestión de trámites</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Información</h4>
+      <ul>
+        <li><a href="#">Quiénes somos</a></li>
+        <li><a href="#">Coberturas</a></li>
+        <li><a href="#">Subsidios PAMI</a></li>
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Cochería Comini. Todos los derechos reservados.</span>
+    <div class="f-badge">Emergencias 24hs — (011) 4221-0000</div>
+  </div>
+</footer>
+
+<!-- FLOAT -->
+<a href="tel:+541142210000" class="float-btn">
+  <div class="pulse"></div>
+  Llamar ahora
+</a>
+
+<script>
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  els.forEach(el => io.observe(el));
+
+  // Form
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-send-zen');
+    btn.textContent = 'Enviado ✓';
+    btn.style.background = 'var(--moss)';
+    btn.style.color = 'var(--washi)';
+    setTimeout(() => {
+      btn.textContent = 'Enviar consulta';
+      btn.style.background = '';
+      btn.style.color = '';
+      e.target.reset();
+    }, 3500);
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
