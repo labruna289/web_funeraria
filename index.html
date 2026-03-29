@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cochería Comini — Plantillas</title>
+  <title>Cochería Comini — Galería de Plantillas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --cream:   #f0ece3;
-      --warm:    #e4dfd5;
-      --stone:   #c8c0b0;
-      --ash:     #6b6358;
-      --dark:    #2a2620;
-      --muted:   #7a7268;
-      --gold:    #5c6b4a;
-      --gold-dark: #47533a;
-      --line:    rgba(92,107,74,0.15);
+      --bg-hero:    #1a1714;
+      --bg-hero-2:  #2a2620;
+      --cream:      #f0ece3;
+      --warm:       #e4dfd5;
+      --stone:      #c8c0b0;
+      --ash:        #6b6358;
+      --dark:       #2a2620;
+      --muted:      #7a7268;
+      --gold:       #5c6b4a;
+      --gold-dark:  #47533a;
+      --line:       rgba(92,107,74,0.12);
     }
 
     html { scroll-behavior: smooth; }
@@ -30,149 +32,534 @@
       font-weight: 300;
       background: var(--cream);
       color: var(--dark);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 60px 24px 80px;
+      overflow-x: hidden;
     }
 
-    header {
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(170deg, var(--bg-hero) 0%, var(--bg-hero-2) 100%);
+      color: var(--cream);
       text-align: center;
-      margin-bottom: 56px;
-      max-width: 600px;
+      padding: 100px 24px 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    header h1 {
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px;
+    }
+
+    .hero-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 24px;
+      animation: fadeDown 1s ease both;
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 20px;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero h1 {
       font-family: 'EB Garamond', serif;
       font-weight: 500;
-      font-size: 2.4rem;
-      letter-spacing: 0.04em;
-      color: var(--dark);
-      margin-bottom: 12px;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      letter-spacing: 0.05em;
+      color: var(--cream);
+      margin-bottom: 16px;
+      animation: fadeUp 0.8s ease 0.4s both;
     }
 
-    header p {
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.6;
+    .hero h1 em {
+      font-style: italic;
+      color: var(--stone);
+    }
+
+    .hero p {
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      color: var(--stone);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.8;
       letter-spacing: 0.02em;
+      animation: fadeUp 0.8s ease 0.6s both;
     }
 
+    .hero-count {
+      margin-top: 32px;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      animation: fadeUp 0.8s ease 0.8s both;
+    }
+
+    .hero-count span {
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* ─── SECTION ─── */
+    .gallery-section {
+      padding: 72px 24px 96px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 40px;
+    }
+
+    /* ─── GRID ─── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 28px;
-      width: 100%;
-      max-width: 1000px;
     }
 
+    /* ─── CARD ─── */
     .card {
-      background: var(--warm);
+      background: #fff;
       border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 36px 32px;
-      transition: box-shadow 0.25s, transform 0.25s;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: box-shadow 0.35s ease, transform 0.35s ease;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.35s ease;
     }
 
     .card:hover {
-      box-shadow: 0 8px 28px rgba(42,38,32,0.08);
-      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(42,38,32,0.1);
+      transform: translateY(-4px);
     }
 
-    .card h2 {
+    .card.revealed:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-preview {
+      height: 8px;
+      display: flex;
+    }
+
+    .card-preview span {
+      flex: 1;
+    }
+
+    .card-body {
+      padding: 32px 28px 28px;
+    }
+
+    .card-swatches {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--cream);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    .card-body h2 {
       font-family: 'EB Garamond', serif;
       font-weight: 500;
-      font-size: 1.35rem;
-      letter-spacing: 0.03em;
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
       color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .card-body .card-fonts {
+      font-size: 0.7rem;
+      color: var(--stone);
+      letter-spacing: 0.04em;
       margin-bottom: 10px;
     }
 
-    .card p {
-      font-size: 0.85rem;
+    .card-body p.card-desc {
+      font-size: 0.82rem;
       color: var(--ash);
-      line-height: 1.6;
+      line-height: 1.65;
       margin-bottom: 20px;
     }
 
-    .card a {
-      display: inline-block;
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-family: 'Zen Kaku Gothic New', sans-serif;
       font-weight: 400;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--cream);
-      background: var(--gold);
-      padding: 10px 22px;
+      color: #fff;
+      padding: 10px 20px;
       border-radius: 4px;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: filter 0.25s, transform 0.25s;
     }
 
-    .card a:hover {
-      background: var(--gold-dark);
+    .card-link:hover {
+      filter: brightness(1.15);
+      transform: translateX(2px);
     }
 
+    .card-link svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ─── FOOTER ─── */
     footer {
-      margin-top: 64px;
-      text-align: center;
-      font-size: 0.75rem;
+      background: var(--dark);
       color: var(--stone);
+      text-align: center;
+      padding: 40px 24px;
+    }
+
+    footer .footer-brand {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
       letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    footer .footer-sub {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
     }
 
     @media (max-width: 680px) {
-      body { padding: 40px 16px 60px; }
-      header h1 { font-size: 1.8rem; }
+      .hero { padding: 72px 20px 56px; }
+      .gallery-section { padding: 48px 16px 64px; }
       .grid { grid-template-columns: 1fr; gap: 20px; }
-      .card { padding: 28px 24px; }
+      .card-body { padding: 24px 22px 22px; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Cochería Comini</h1>
-    <p>Plantillas de diseño para el sitio web de servicios fúnebres. Seleccioná una versión para previsualizarla.</p>
-  </header>
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="hero-line"></div>
+    <p class="hero-tag">Galería de Diseños</p>
+    <h1>Cochería <em>Comini</em></h1>
+    <p>Explorá las distintas propuestas de diseño para el sitio web de servicios fúnebres. Cada plantilla ofrece una estética y experiencia únicas.</p>
+    <p class="hero-count"><span>10</span> plantillas disponibles</p>
+  </section>
 
-  <div class="grid">
+  <!-- ─── GALLERY ─── -->
+  <section class="gallery-section">
+    <p class="section-label">Seleccioná una versión para previsualizarla</p>
 
-    <div class="card">
-      <h2>v1 — Clásica Cálida</h2>
-      <p>Paleta crema y dorada con tipografía Cormorant Garamond y Lato. Diseño elegante y tradicional.</p>
-      <a href="cocheria-comini_v1.html">Ver plantilla</a>
+    <div class="grid">
+
+      <!-- v1 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#f5f2ec"></span>
+          <span style="background:#a8906a"></span>
+          <span style="background:#2c2820"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#f5f2ec"></div>
+            <div class="swatch" style="background:#a8906a"></div>
+            <div class="swatch" style="background:#2c2820"></div>
+          </div>
+          <h2>v1 — Clásica Cálida</h2>
+          <p class="card-fonts">Cormorant Garamond + Lato</p>
+          <p class="card-desc">Paleta crema y dorada con tipografía serif elegante. Diseño tradicional y acogedor, ideal para transmitir calidez y confianza.</p>
+          <a href="cocheria-comini_v1.html" class="card-link" style="background:#a8906a">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v2 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#0f0f0f"></span>
+          <span style="background:#8c7a55"></span>
+          <span style="background:#e8e4dc"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#0f0f0f"></div>
+            <div class="swatch" style="background:#8c7a55"></div>
+            <div class="swatch" style="background:#e8e4dc"></div>
+          </div>
+          <h2>v2 — Elegancia Oscura</h2>
+          <p class="card-fonts">Noto Serif + Noto Sans</p>
+          <p class="card-desc">Tema oscuro sofisticado con acentos dorados. Estilo moderno y sobrio que transmite elegancia y profesionalismo.</p>
+          <a href="cocheria-comini_v2.html" class="card-link" style="background:#8c7a55">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v3 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#f0ece3"></span>
+          <span style="background:#5c6b4a"></span>
+          <span style="background:#2a2620"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#f0ece3"></div>
+            <div class="swatch" style="background:#5c6b4a"></div>
+            <div class="swatch" style="background:#2a2620"></div>
+          </div>
+          <h2>v3 — Zen Minimalista</h2>
+          <p class="card-fonts">EB Garamond + Zen Kaku Gothic New</p>
+          <p class="card-desc">Estética japonesa con textura de papel washi y verde musgo como único acento. Minimalismo contemplativo.</p>
+          <a href="cocheria-comini_v3.html" class="card-link" style="background:#5c6b4a">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v4 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#f5f2ec"></span>
+          <span style="background:#a8906a"></span>
+          <span style="background:#2c2820"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#f5f2ec"></div>
+            <div class="swatch" style="background:#a8906a"></div>
+            <div class="swatch" style="background:#2c2820"></div>
+          </div>
+          <h2>v4 — Moderna Expandida</h2>
+          <p class="card-fonts">Cormorant Garamond + Lato</p>
+          <p class="card-desc">Contenido ampliado con 12 servicios detallados, secciones alternadas y tarjetas de servicio. La más completa en contenido.</p>
+          <a href="cocheria-comini_v4.html" class="card-link" style="background:#a8906a">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v5 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#f0ece3"></span>
+          <span style="background:#5c6b4a"></span>
+          <span style="background:#2a2620"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#f0ece3"></div>
+            <div class="swatch" style="background:#5c6b4a"></div>
+            <div class="swatch" style="background:#2a2620"></div>
+          </div>
+          <h2>v5 — Zen Refinada</h2>
+          <p class="card-fonts">EB Garamond + Zen Kaku Gothic New</p>
+          <p class="card-desc">Versión más pulida con textura washi, tipografía zen y contenido expandido. Fusión de minimalismo y funcionalidad.</p>
+          <a href="cocheria-comini_v5.html" class="card-link" style="background:#5c6b4a">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v6 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#1a1a2e"></span>
+          <span style="background:#c9a84c"></span>
+          <span style="background:#f0ead6"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#1a1a2e"></div>
+            <div class="swatch" style="background:#c9a84c"></div>
+            <div class="swatch" style="background:#f0ead6"></div>
+          </div>
+          <h2>v6 — Art Déco</h2>
+          <p class="card-fonts">Playfair Display + Raleway</p>
+          <p class="card-desc">Geometría dorada y líneas elegantes sobre fondo oscuro. Inspiración en la era Gatsby con patrones de abanico y sunburst.</p>
+          <a href="cocheria-comini_v6.html" class="card-link" style="background:#c9a84c">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v7 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#ffffff"></span>
+          <span style="background:#e63946"></span>
+          <span style="background:#1a1a1a"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#ffffff; border-color:#eee"></div>
+            <div class="swatch" style="background:#e63946"></div>
+            <div class="swatch" style="background:#1a1a1a"></div>
+          </div>
+          <h2>v7 — Suiza Moderna</h2>
+          <p class="card-fonts">Space Grotesk + Inter</p>
+          <p class="card-desc">Diseño tipográfico internacional con precisión suiza. Grilla limpia, rojo como único acento, máxima claridad visual.</p>
+          <a href="cocheria-comini_v7.html" class="card-link" style="background:#e63946">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v8 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#f7f5f0"></span>
+          <span style="background:#2d5016"></span>
+          <span style="background:#8b6914"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#f7f5f0"></div>
+            <div class="swatch" style="background:#2d5016"></div>
+            <div class="swatch" style="background:#8b6914"></div>
+          </div>
+          <h2>v8 — Jardín Botánico</h2>
+          <p class="card-fonts">Libre Baskerville + Source Sans 3</p>
+          <p class="card-desc">Inspiración natural con motivos botánicos SVG, formas orgánicas y paleta de verdes bosque. Calidez y serenidad.</p>
+          <a href="cocheria-comini_v8.html" class="card-link" style="background:#2d5016">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v9 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#f5f5f5"></span>
+          <span style="background:#8b7355"></span>
+          <span style="background:#4a4a4a"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#f5f5f5"></div>
+            <div class="swatch" style="background:#8b7355"></div>
+            <div class="swatch" style="background:#4a4a4a"></div>
+          </div>
+          <h2>v9 — Mármol y Piedra</h2>
+          <p class="card-fonts">Cinzel + Nunito Sans</p>
+          <p class="card-desc">Texturas mediterráneas con elegancia clásica. Motivos de columnas, mármol y bronce. Monumentalidad atemporal.</p>
+          <a href="cocheria-comini_v9.html" class="card-link" style="background:#8b7355">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- v10 -->
+      <div class="card">
+        <div class="card-preview">
+          <span style="background:#0a0a1a"></span>
+          <span style="background:#6366f1"></span>
+          <span style="background:#f0abfc"></span>
+        </div>
+        <div class="card-body">
+          <div class="card-swatches">
+            <div class="swatch" style="background:#0a0a1a"></div>
+            <div class="swatch" style="background:#6366f1"></div>
+            <div class="swatch" style="background:#f0abfc"></div>
+          </div>
+          <h2>v10 — Cristal Contemporáneo</h2>
+          <p class="card-fonts">Outfit + DM Sans</p>
+          <p class="card-desc">Glassmorphism con gradientes modernos y efectos de cristal. Orbes flotantes, brillos sutiles y estética de vanguardia.</p>
+          <a href="cocheria-comini_v10.html" class="card-link" style="background:linear-gradient(135deg,#6366f1,#a78bfa)">
+            Ver plantilla
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="card">
-      <h2>v2 — Elegancia Oscura</h2>
-      <p>Tema oscuro sofisticado con tipografía Noto Serif y Noto Sans. Estilo moderno y sobrio.</p>
-      <a href="cocheria-comini_v2.html">Ver plantilla</a>
-    </div>
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <p class="footer-brand">Cochería Comini</p>
+    <p class="footer-sub">Servicios Fúnebres — Galería de Plantillas</p>
+  </footer>
 
-    <div class="card">
-      <h2>v3 — Zen Minimalista</h2>
-      <p>Estética japonesa con textura de papel washi. Tipografía EB Garamond y Zen Kaku Gothic New.</p>
-      <a href="cocheria-comini_v3.html">Ver plantilla</a>
-    </div>
-
-    <div class="card">
-      <h2>v4 — Moderna Expandida</h2>
-      <p>Contenido ampliado con 12 servicios detallados. Paleta cálida clásica, Cormorant Garamond y Lato.</p>
-      <a href="cocheria-comini_v4.html">Ver plantilla</a>
-    </div>
-
-    <div class="card">
-      <h2>v5 — Zen Refinada</h2>
-      <p>Versión más pulida con textura washi, tipografía zen y acentos en verde musgo. La más reciente.</p>
-      <a href="cocheria-comini_v5.html">Ver plantilla</a>
-    </div>
-
-  </div>
-
-  <footer>Cochería Comini — Servicios Fúnebres</footer>
+  <!-- ─── SCROLL REVEAL ─── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.card');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Array.from(cards).indexOf(entry.target);
+            entry.target.style.transitionDelay = `${idx * 0.08}s`;
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      cards.forEach(card => observer.observe(card));
+    });
+  </script>
 
 </body>
 </html>
