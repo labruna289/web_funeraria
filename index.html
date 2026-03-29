@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cochería Comini — Plantillas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #f0ece3;
+      --warm:    #e4dfd5;
+      --stone:   #c8c0b0;
+      --ash:     #6b6358;
+      --dark:    #2a2620;
+      --muted:   #7a7268;
+      --gold:    #5c6b4a;
+      --gold-dark: #47533a;
+      --line:    rgba(92,107,74,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-weight: 300;
+      background: var(--cream);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 24px 80px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+      max-width: 600px;
+    }
+
+    header h1 {
+      font-family: 'EB Garamond', serif;
+      font-weight: 500;
+      font-size: 2.4rem;
+      letter-spacing: 0.04em;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .card {
+      background: var(--warm);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 36px 32px;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 28px rgba(42,38,32,0.08);
+      transform: translateY(-3px);
+    }
+
+    .card h2 {
+      font-family: 'EB Garamond', serif;
+      font-weight: 500;
+      font-size: 1.35rem;
+      letter-spacing: 0.03em;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.85rem;
+      color: var(--ash);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .card a {
+      display: inline-block;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-weight: 400;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--gold);
+      padding: 10px 22px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .card a:hover {
+      background: var(--gold-dark);
+    }
+
+    footer {
+      margin-top: 64px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--stone);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 680px) {
+      body { padding: 40px 16px 60px; }
+      header h1 { font-size: 1.8rem; }
+      .grid { grid-template-columns: 1fr; gap: 20px; }
+      .card { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Cochería Comini</h1>
+    <p>Plantillas de diseño para el sitio web de servicios fúnebres. Seleccioná una versión para previsualizarla.</p>
+  </header>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2>v1 — Clásica Cálida</h2>
+      <p>Paleta crema y dorada con tipografía Cormorant Garamond y Lato. Diseño elegante y tradicional.</p>
+      <a href="cocheria-comini_v1.html">Ver plantilla</a>
+    </div>
+
+    <div class="card">
+      <h2>v2 — Elegancia Oscura</h2>
+      <p>Tema oscuro sofisticado con tipografía Noto Serif y Noto Sans. Estilo moderno y sobrio.</p>
+      <a href="cocheria-comini_v2.html">Ver plantilla</a>
+    </div>
+
+    <div class="card">
+      <h2>v3 — Zen Minimalista</h2>
+      <p>Estética japonesa con textura de papel washi. Tipografía EB Garamond y Zen Kaku Gothic New.</p>
+      <a href="cocheria-comini_v3.html">Ver plantilla</a>
+    </div>
+
+    <div class="card">
+      <h2>v4 — Moderna Expandida</h2>
+      <p>Contenido ampliado con 12 servicios detallados. Paleta cálida clásica, Cormorant Garamond y Lato.</p>
+      <a href="cocheria-comini_v4.html">Ver plantilla</a>
+    </div>
+
+    <div class="card">
+      <h2>v5 — Zen Refinada</h2>
+      <p>Versión más pulida con textura washi, tipografía zen y acentos en verde musgo. La más reciente.</p>
+      <a href="cocheria-comini_v5.html">Ver plantilla</a>
+    </div>
+
+  </div>
+
+  <footer>Cochería Comini — Servicios Fúnebres</footer>
+
+</body>
+</html>
